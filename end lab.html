@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Student Marks Table</title>
+
+    <style>
+
+        body { font-family: Arial; margin: 20px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+
+        th { background: #f2f2f2; cursor: pointer; }
+
+        input, select { padding: 6px; margin-right: 10px; }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+<h2>Student Marks Table</h2>
+
+
+
+<!-- Filters -->
+
+<label>Filter by Subject:</label>
+
+<select id="subjectFilter" onchange="filterTable()">
+
+    <option value="">All</option>
+
+    <option value="Math">Math</option>
+
+    <option value="Science">Science</option>
+
+    <option value="English">English</option>
+
+</select>
+
+
+
+<label>Min Score:</label>
+
+<input type="number" id="minScore" oninput="filterTable()" placeholder="0">
+
+
+
+<label>Max Score:</label>
+
+<input type="number" id="maxScore" oninput="filterTable()" placeholder="100">
+
+
+
+<!-- Table -->
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th onclick="sortTable('name')">Student Name</th>
+
+            <th onclick="sortTable('subject')">Subject</th>
+
+            <th onclick="sortTable('score')">Score</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody id="tableBody"></tbody>
+
+</table>
+
+
+
+<script>
+
+    // Sample Data
+
+    let students = [
+
+        {name: "Alice", subject: "Math", score: 88},
+
+        {name: "Bob", subject: "Science", score: 72},
+
+        {name: "Charlie", subject: "English", score: 95},
+
+        {name: "David", subject: "Math", score: 60},
+
+        {name: "Eva", subject: "Science", score: 85}
+
+    ];
+
+
+
+    let sortDirection = true; // true = ascending
+
+
+
+    // Display table initially
+
+    displayTable(students);
+
+
+
+    // Display function
+
+    function displayTable(data) {
+
+        let rows = "";
+
+        data.forEach(s => {
+
+            rows += `
+
+                <tr>
+
+                    <td>${s.name}</td>
+
+                    <td>${s.subject}</td>
+
+                    <td>${s.score}</td>
+
+                </tr>
+
+            `;
+
+        });
+
+        document.getElementById("tableBody").innerHTML = rows;
+
+    }
+
+
+
+    // Sorting function
+
+    function sortTable(key) {
+
+        sortDirection = !sortDirection;
+
+        students.sort((a, b) => {
+
+            if (a[key] < b[key]) return sortDirection ? -1 : 1;
+
+            if (a[key] > b[key]) return sortDirection ? 1 : -1;
+
+            return 0;
+
+        });
+
+        filterTable(); // apply filters after sorting
+
+    }
+
+
+
+    // Filtering function
+
+    function filterTable() {
+
+        let subject = document.getElementById("subjectFilter").value;
+
+        let min = document.getElementById("minScore").value;
+
+        let max = document.getElementById("maxScore").value;
+
+
+
+        let filtered = students.filter(s => {
+
+            let subjectMatch = subject === "" || s.subject === subject;
+
+            let minMatch = min === "" || s.score >= Number(min);
+
+            let maxMatch = max === "" || s.score <= Number(max);
+
+            return subjectMatch && minMatch && maxMatch;
+
+        });
+
+
+
+        displayTable(filtered);
+
+    }
+
+</script>
+
+
+
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Marks Table</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background: #f2f2f2; cursor: pointer; }
+        input, select { padding: 6px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Student Marks Table</h2>
+
+<!-- Filters -->
+<label>Filter by Subject:</label>
+<select id="subjectFilter" onchange="filterTable()">
+    <option value="">All</option>
+    <option value="Math">Math</option>
+    <option value="Science">Science</option>
+    <option value="English">English</option>
+</select>
+
+<label>Min Score:</label>
+<input type="number" id="minScore" oninput="filterTable()" placeholder="0">
+
+<label>Max Score:</label>
+<input type="number" id="maxScore" oninput="filterTable()" placeholder="100">
+
+<!-- Table -->
+<table>
+    <thead>
+        <tr>
+            <th onclick="sortTable('name')">Student Name</th>
+            <th onclick="sortTable('subject')">Subject</th>
+            <th onclick="sortTable('score')">Score</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+    // Sample Data
+    let students = [
+        {name: "Alice", subject: "Math", score: 88},
+        {name: "Bob", subject: "Science", score: 72},
+        {name: "Charlie", subject: "English", score: 95},
+        {name: "David", subject: "Math", score: 60},
+        {name: "Eva", subject: "Science", score: 85}
+    ];
+
+    let sortDirection = true; // true = ascending
+
+    // Display table initially
+    displayTable(students);
+
+    // Display function
+    function displayTable(data) {
+        let rows = "";
+        data.forEach(s => {
+            rows += `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${s.subject}</td>
+                    <td>${s.score}</td>
+                </tr>
+            `;
+        });
+        document.getElementById("tableBody").innerHTML = rows;
+    }
+
+    // Sorting function
+    function sortTable(key) {
+        sortDirection = !sortDirection;
+        students.sort((a, b) => {
+            if (a[key] < b[key]) return sortDirection ? -1 : 1;
+            if (a[key] > b[key]) return sortDirection ? 1 : -1;
+            return 0;
+        });
+        filterTable(); // apply filters after sorting
+    }
+
+    // Filtering function
+    function filterTable() {
+        let subject = document.getElementById("subjectFilter").value;
+        let min = document.getElementById("minScore").value;
+        let max = document.getElementById("maxScore").value;
+
+        let filtered = students.filter(s => {
+            let subjectMatch = subject === "" || s.subject === subject;
+            let minMatch = min === "" || s.score >= Number(min);
+            let maxMatch = max === "" || s.score <= Number(max);
+            return subjectMatch && minMatch && maxMatch;
+        });
+
+        displayTable(filtered);
+    }
+</script>
+
+</body>
+</html>
